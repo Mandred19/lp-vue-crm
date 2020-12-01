@@ -36,9 +36,9 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/create-record',
-    name: 'CreateRecord',
+    name: 'Record',
     // meta: { layout: 'main', auth: true },
-    component: () => import('@/views/CreateRecord/index.vue'),
+    component: () => import('@/views/Record/index.vue'),
   },
   {
     path: '/profile',

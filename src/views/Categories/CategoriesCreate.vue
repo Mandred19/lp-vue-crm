@@ -12,6 +12,7 @@
         <v-text-field
         label="Category limit"
         title="Category limit"
+        type="number"
         outlined/>
 
         <v-btn

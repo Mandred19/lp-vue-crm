@@ -35,4 +35,8 @@ export default class App extends Vue {
   .app-container {
     padding: 8px 16px;
   }
+
+  .radio-group {
+    margin: 0 0 16px 0;
+  }
 </style>

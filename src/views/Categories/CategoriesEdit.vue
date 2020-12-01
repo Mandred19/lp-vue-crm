@@ -19,6 +19,7 @@
         <v-text-field
         label="Category limit"
         title="Category limit"
+        type="number"
         outlined/>
 
         <v-btn
@@ -48,7 +49,7 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class CategoriesEdit extends Vue {
-  private readonly categories = ['Foo', 'Bar', 'Fizz', 'Buzz'];
+  private categories = ['Foo', 'Bar', 'Fizz', 'Buzz'];
 
   formHandler(): void {
     console.warn(111);

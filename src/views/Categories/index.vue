@@ -5,11 +5,11 @@
     <Preloader v-if="loading"/>
 
     <v-row v-else>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" md="6">
         <CategoriesCreate/>
       </v-col>
 
-      <v-col cols="12" sm="6">
+      <v-col cols="12" md="6">
         <CategoriesEdit/>
       </v-col>
     </v-row>

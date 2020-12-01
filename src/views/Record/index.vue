@@ -2,9 +2,9 @@
   <v-container fluid class="app-container">
     <ScreenTitle/>
 
-    <v-row no-gutters>
-      <v-col cols="12" sm="4">
-        <div>CreateRecord</div>
+    <v-row>
+      <v-col md="6" sm="12">
+        <RecordCreate/>
       </v-col>
     </v-row>
   </v-container>
@@ -14,13 +14,14 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import ScreenTitle from '@/components/ScreenTitle.vue';
+import RecordCreate from '@/views/Record/RecordCreate.vue';
 
 @Component({
-  name: 'CreateRecord',
-  components: { ScreenTitle },
+  name: 'Record',
+  components: { ScreenTitle, RecordCreate },
 })
 
-export default class CreateRecord extends Vue {
+export default class Record extends Vue {
 
 }
 </script>

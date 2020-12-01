@@ -6,7 +6,6 @@
 
     <v-main>
       <router-view/>
-      {{ isVisibleSidebar }}
     </v-main>
   </v-app>
 </template>

@@ -15,28 +15,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Mixins } from 'vue-property-decorator';
+import RoutesListMixin from '@/helpers/mixins/RoutesListMixin';
 
 @Component({
   name: 'SidebarRoutesList',
   components: {},
 })
 
-export default class SidebarRoutesList extends Vue {
-  protected readonly routesList: InterfaceRoute[] = [
-    { title: 'Home', to: '/' },
-    { title: 'Create record', to: '/create-record' },
-    { title: 'Categories', to: '/categories' },
-    { title: 'Planing', to: '/planing' },
-    { title: 'History', to: '/history' },
-  ];
-}
-
-interface InterfaceRoute {
-  title: string;
-  to: string;
-}
+export default class SidebarRoutesList extends Mixins(RoutesListMixin) {}
 </script>
 
 <style lang="scss">

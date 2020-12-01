@@ -2,7 +2,7 @@
   <v-app>
     <AppSidebar :isVisibleSidebar="isVisibleSidebar"/>
 
-    <AppHeader @toggleSidebar="toggleSidebar"/>
+    <AppHeader @toggleSidebar="toggleSidebar($event)" :isVisibleSidebar="isVisibleSidebar"/>
 
     <v-main>
       <router-view/>
@@ -24,8 +24,8 @@ import AppHeader from '@/components/AppHeader/index.vue';
 export default class MainLayout extends Vue {
   isVisibleSidebar = true;
 
-  public toggleSidebar(): void {
-    this.isVisibleSidebar = !this.isVisibleSidebar;
+  public toggleSidebar(val: boolean): void {
+    this.isVisibleSidebar = val;
   }
 }
 </script>

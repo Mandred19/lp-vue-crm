@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Emit } from 'vue-property-decorator';
+import { Component, Emit, Prop } from 'vue-property-decorator';
 import AppHeaderSelect from '@/components/AppHeader/AppHeaderSelect.vue';
 
 @Component({
@@ -21,9 +21,12 @@ import AppHeaderSelect from '@/components/AppHeader/AppHeaderSelect.vue';
 })
 
 export default class AppHeader extends Vue {
+  @Prop(Boolean) isVisibleSidebar = true;
+
   @Emit('toggleSidebar')
-  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
-  toggleSidebar(): void {}
+  toggleSidebar(): boolean {
+    return !this.isVisibleSidebar;
+  }
 }
 </script>
 

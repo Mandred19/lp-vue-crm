@@ -1,11 +1,12 @@
 <template>
   <v-app>
-    <Sidebar :isVisibleSidebar="isVisibleSidebar"/>
+    <Sidebar @sidebarStateHandler="sidebarStateHandler($event)" :isVisibleSidebar="isVisibleSidebar"/>
 
     <Header @toggleSidebar="toggleSidebar($event)" :isVisibleSidebar="isVisibleSidebar"/>
 
     <v-main>
       <router-view/>
+      {{ isVisibleSidebar }}
     </v-main>
   </v-app>
 </template>
@@ -24,8 +25,12 @@ import Header from '@/components/Header/index.vue';
 export default class MainLayout extends Vue {
   isVisibleSidebar = true;
 
-  public toggleSidebar(val: boolean): void {
+  private toggleSidebar(val: boolean): void {
     this.isVisibleSidebar = val;
+  }
+
+  private sidebarStateHandler(state: boolean): void {
+    this.isVisibleSidebar = state;
   }
 }
 </script>

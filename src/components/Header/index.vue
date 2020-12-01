@@ -24,7 +24,7 @@ export default class Header extends Vue {
   @Prop(Boolean) isVisibleSidebar = true;
 
   @Emit('toggleSidebar')
-  toggleSidebar(): boolean {
+  private toggleSidebar(): boolean {
     return !this.isVisibleSidebar;
   }
 }

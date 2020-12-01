@@ -6,18 +6,18 @@
 
     <v-spacer></v-spacer>
 
-    <AppHeaderSelect/>
+    <AppHeaderDropdown/>
   </v-app-bar>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Emit, Prop } from 'vue-property-decorator';
-import AppHeaderSelect from '@/components/AppHeader/AppHeaderSelect.vue';
+import AppHeaderDropdown from '@/components/AppHeader/AppHeaderDropdown.vue';
 
 @Component({
   name: 'AppHeader',
-  components: { AppHeaderSelect },
+  components: { AppHeaderDropdown },
 })
 
 export default class AppHeader extends Vue {

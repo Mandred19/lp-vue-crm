@@ -18,7 +18,9 @@
       <v-list>
         <v-list-item
         v-for="(item, index) of adminRoutes"
-        :key="index">
+        :key="index"
+        @click="dropdownHandler(item.action)"
+        class="header-dropdown-item">
           <v-list-item-title>
             {{ item.title }}
           </v-list-item-title>
@@ -33,18 +35,33 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'AppHeaderDropdown',
+  name: 'HeaderDropdown',
   components: {},
 })
 
-export default class AppHeaderDropdown extends Vue {
-  adminRoutes = [
-    { title: '111111111111', to: '' },
-    { title: '222222222222', to: '' },
+export default class HeaderDropdown extends Vue {
+  protected readonly adminRoutes: InterfaceDropdownItem[] = [
+    { title: 'Profile', action: '/profile' },
+    { title: 'Exit', action: 'logout' },
   ];
+
+  private dropdownHandler(action: string) {
+    switch (action) {
+    case '/profile': this.$router.push(action).catch((e) => console.warn(e)); break;
+    case 'logout': console.warn('logout'); break;
+    default: break;
+    }
+  }
+}
+
+interface InterfaceDropdownItem {
+  title: string;
+  action: string;
 }
 </script>
 
 <style lang="scss">
-
+  .header-dropdown-item {
+    cursor: pointer;
+  }
 </style>

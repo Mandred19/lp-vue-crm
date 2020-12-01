@@ -29,6 +29,10 @@ export default class App extends Vue {
 
 <style lang="scss">
   html {
-    overflow: h;
+    overflow: hidden;
+  }
+
+  .app-container {
+    padding: 8px 16px;
   }
 </style>

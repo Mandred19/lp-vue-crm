@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <AppSidebar :isVisibleSidebar="isVisibleSidebar"/>
+    <Sidebar :isVisibleSidebar="isVisibleSidebar"/>
 
-    <AppHeader @toggleSidebar="toggleSidebar($event)" :isVisibleSidebar="isVisibleSidebar"/>
+    <Header @toggleSidebar="toggleSidebar($event)" :isVisibleSidebar="isVisibleSidebar"/>
 
     <v-main>
       <router-view/>
@@ -13,12 +13,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import AppSidebar from '@/components/AppSidebar/index.vue';
-import AppHeader from '@/components/AppHeader/index.vue';
+import Sidebar from '@/components/Sidebar/index.vue';
+import Header from '@/components/Header/index.vue';
 
 @Component({
   name: 'MainLayout',
-  components: { AppSidebar, AppHeader },
+  components: { Sidebar, Header },
 })
 
 export default class MainLayout extends Vue {

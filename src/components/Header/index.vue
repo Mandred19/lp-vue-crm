@@ -6,21 +6,21 @@
 
     <v-spacer></v-spacer>
 
-    <AppHeaderDropdown/>
+    <HeaderDropdown/>
   </v-app-bar>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Emit, Prop } from 'vue-property-decorator';
-import AppHeaderDropdown from '@/components/AppHeader/AppHeaderDropdown.vue';
+import HeaderDropdown from '@/components/Header/HeaderDropdown.vue';
 
 @Component({
-  name: 'AppHeader',
-  components: { AppHeaderDropdown },
+  name: 'Header',
+  components: { HeaderDropdown },
 })
 
-export default class AppHeader extends Vue {
+export default class Header extends Vue {
   @Prop(Boolean) isVisibleSidebar = true;
 
   @Emit('toggleSidebar')

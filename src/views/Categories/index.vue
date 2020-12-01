@@ -2,7 +2,9 @@
   <v-container fluid class="app-container">
     <ScreenTitle/>
 
-    <v-row no-gutters>
+    <Preloader v-if="loading"/>
+
+    <v-row v-else no-gutters>
       <v-col cols="12" sm="4">
         <v-card
         class="pa-2"
@@ -35,7 +37,7 @@ import ScreenTitle from '@/components/ScreenTitle.vue';
 })
 
 export default class Categories extends Vue {
-
+  private loading = false;
 }
 </script>
 

@@ -6,7 +6,9 @@
       </v-col>
     </v-row>
 
-    <v-row no-gutters>
+    <Preloader v-if="loading"/>
+
+    <v-row v-else no-gutters>
       <v-col cols="12" sm="4">
         <div>Profile</div>
       </v-col>
@@ -24,7 +26,7 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class Profile extends Vue {
-
+  private loading = false;
 }
 </script>
 

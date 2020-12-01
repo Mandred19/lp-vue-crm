@@ -2,7 +2,9 @@
   <v-container fluid class="app-container">
     <ScreenTitle/>
 
-    <v-row no-gutters>
+    <Preloader v-if="loading"/>
+
+    <v-row v-else no-gutters>
       <v-col cols="12" sm="4">
         <div>Planing</div>
       </v-col>
@@ -21,7 +23,7 @@ import ScreenTitle from '@/components/ScreenTitle.vue';
 })
 
 export default class Planing extends Vue {
-
+  private loading = false;
 }
 </script>
 

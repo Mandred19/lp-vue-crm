@@ -1,6 +1,9 @@
 <template>
   <v-container fluid class="app-container">
-    <v-row no-gutters>
+
+    <Preloader v-if="loading"/>
+
+    <v-row v-else no-gutters>
       <v-col cols="12" sm="4">
         <div>Home</div>
       </v-col>
@@ -18,7 +21,7 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class Home extends Vue {
-
+  private loading = false;
 }
 </script>
 

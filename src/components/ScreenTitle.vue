@@ -1,7 +1,7 @@
 <template>
   <v-row v-if="currentRouteTitle" class="flex flex-grow-1 align-center justify-start">
     <v-col cols="12">
-      <h1>{{ currentRouteTitle.title }}</h1>
+      <h1 class="screen-title">{{ currentRouteTitle.title }}</h1>
     </v-col>
   </v-row>
 </template>
@@ -24,5 +24,7 @@ export default class ScreenTitle extends Mixins(RoutesListMixin) {
 </script>
 
 <style lang="scss">
-
+  .screen-title {
+    border-bottom: 1px solid rgba(#999, .3);
+  }
 </style>

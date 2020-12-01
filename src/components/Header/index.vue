@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app color="primary">
     <div class="d-flex align-center">
-      <v-app-bar-nav-icon @click.stop="toggleSidebar"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleSidebar" title="Toggle sidebar menu"/>
     </div>
 
     <v-spacer></v-spacer>
@@ -24,7 +24,7 @@ export default class Header extends Vue {
   @Prop(Boolean) isVisibleSidebar = true;
 
   @Emit('toggleSidebar')
-  private toggleSidebar(): boolean {
+  toggleSidebar(): boolean {
     return !this.isVisibleSidebar;
   }
 }

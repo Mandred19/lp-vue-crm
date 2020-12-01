@@ -29,7 +29,7 @@ export default class App extends Vue {
 
 <style lang="scss">
   html {
-    overflow: hidden;
+    overflow-y: auto;
   }
 
   .app-container {

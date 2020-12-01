@@ -4,23 +4,13 @@
 
     <Preloader v-if="loading"/>
 
-    <v-row v-else no-gutters>
-      <v-col cols="12" sm="4">
-        <v-card
-        class="pa-2"
-        outlined
-        tile>
-          One of three columns
-        </v-card>
+    <v-row v-else>
+      <v-col cols="12" sm="6">
+        <CategoriesCreate/>
       </v-col>
 
-      <v-col cols="12" sm="4">
-        <v-card
-        class="pa-2"
-        outlined
-        tile>
-          One of three columns
-        </v-card>
+      <v-col cols="12" sm="6">
+        <CategoriesEdit/>
       </v-col>
     </v-row>
   </v-container>
@@ -30,10 +20,12 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import ScreenTitle from '@/components/ScreenTitle.vue';
+import CategoriesCreate from '@/views/Categories/CategoriesCreate.vue';
+import CategoriesEdit from '@/views/Categories/CategoriesEdit.vue';
 
 @Component({
   name: 'Categories',
-  components: { ScreenTitle },
+  components: { ScreenTitle, CategoriesCreate, CategoriesEdit },
 })
 
 export default class Categories extends Vue {

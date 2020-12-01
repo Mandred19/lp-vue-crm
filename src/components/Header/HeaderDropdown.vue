@@ -45,7 +45,7 @@ export default class HeaderDropdown extends Vue {
     { title: 'Exit', action: 'logout' },
   ];
 
-  private dropdownHandler(action: string) {
+  dropdownHandler(action: string) {
     switch (action) {
     case '/profile': this.$router.push(action).catch((e) => console.warn(e)); break;
     case 'logout': console.warn('logout'); break;

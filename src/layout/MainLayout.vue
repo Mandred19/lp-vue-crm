@@ -24,11 +24,11 @@ import Header from '@/components/Header/index.vue';
 export default class MainLayout extends Vue {
   isVisibleSidebar = true;
 
-  private toggleSidebar(val: boolean): void {
+  toggleSidebar(val: boolean): void {
     this.isVisibleSidebar = val;
   }
 
-  private sidebarStateHandler(state: boolean): void {
+  sidebarStateHandler(state: boolean): void {
     this.isVisibleSidebar = state;
   }
 }

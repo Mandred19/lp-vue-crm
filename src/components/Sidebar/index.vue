@@ -23,7 +23,7 @@ export default class Sidebar extends Vue {
   @Prop(Boolean) isVisibleSidebar = true;
 
   @Emit('sidebarStateHandler')
-  private sidebarStateHandler(state: boolean): boolean {
+  sidebarStateHandler(state: boolean): boolean {
     return state;
   }
 }

@@ -5,6 +5,7 @@
       v-for="route of routesList"
       :key="route.name"
       :to="route.to"
+      :title="route.title"
       exact>
         <v-list-item-title>
           {{ route.title }}

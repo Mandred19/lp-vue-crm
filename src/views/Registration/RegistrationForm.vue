@@ -26,15 +26,21 @@
         outlined
         @click:append="isShow = !isShow"/>
 
+        <v-text-field
+        type="text"
+        label="Name"
+        title="Name"
+        outlined/>
+
         <v-btn
         :loading="false"
         :disabled="false"
         block
         type="submit"
-        title="Login"
+        title="Register"
         color="blue-grey"
         class="white--text">
-          Login
+          Register
           <v-icon right>
             mdi-send-outline
           </v-icon>
@@ -44,15 +50,15 @@
 
     <v-card-text>
       <div class="d-flex align-center flex-row flex-nowrap">
-        <span class="text--black font-weight-bold mr-4">Do not have an account?</span>
+        <span class="text--black font-weight-bold mr-4">Do you have an account?</span>
 
         <v-btn
-        title="Register"
+        title="Login"
         color="blue-grey"
         text
-        to="/register"
+        to="/login"
         class="white--text">
-          Register
+          Login
         </v-btn>
       </div>
     </v-card-text>
@@ -64,11 +70,11 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'AuthorizationForm',
+  name: 'RegistrationForm',
   components: {},
 })
 
-export default class AuthorizationForm extends Vue {
+export default class RegistrationForm extends Vue {
   private password = '';
 
   private isShow = false;
@@ -80,7 +86,5 @@ export default class AuthorizationForm extends Vue {
 </script>
 
 <style lang="scss">
-  .auth-card {
-    margin: auto;
-  }
+
 </style>

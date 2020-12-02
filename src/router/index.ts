@@ -10,12 +10,12 @@ const routes: Array<RouteConfig> = [
     // meta: { layout: 'empty' },
     component: () => import('@/views/Authorization/index.vue'),
   },
-  // {
-  //   path: '/register',
-  //   name: 'Registration',
-  //   // meta: { layout: 'empty' },
-  //   component: () => import('@/views/Registration/index.vue'),
-  // },
+  {
+    path: '/register',
+    name: 'Registration',
+    // meta: { layout: 'empty' },
+    component: () => import('@/views/Registration/index.vue'),
+  },
   {
     path: '/categories',
     name: 'Categories',

@@ -13,16 +13,14 @@ import MainLayout from '@/layout/MainLayout.vue';
 @Component({
   name: 'App',
   components: {
-    EmptyLayout,
-    MainLayout,
+    'empty-layout': EmptyLayout,
+    'main-layout': MainLayout,
   },
 })
 
 export default class App extends Vue {
-  private layout = 'EmptyLayout';
-
   get currentLayout() {
-    return this.layout;
+    return this.$route.meta.layout ? `${this.$route.meta.layout}-layout` : 'empty-layout';
   }
 }
 </script>

@@ -19,7 +19,7 @@ import MainLayout from '@/layout/MainLayout.vue';
 })
 
 export default class App extends Vue {
-  private layout = 'MainLayout';
+  private layout = 'EmptyLayout';
 
   get currentLayout() {
     return this.layout;

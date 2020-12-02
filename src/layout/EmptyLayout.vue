@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <div>EmptyLayout</div>
     <router-view/>
   </v-app>
 </template>

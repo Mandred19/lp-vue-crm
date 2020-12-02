@@ -4,12 +4,12 @@ import VueRouter, { RouteConfig } from 'vue-router';
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  // {
-  //   path: '/login',
-  //   name: 'Authorization',
-  //   // meta: { layout: 'empty' },
-  //   component: () => import('@/views/Authorization/index.vue'),
-  // },
+  {
+    path: '/login',
+    name: 'Authorization',
+    // meta: { layout: 'empty' },
+    component: () => import('@/views/Authorization/index.vue'),
+  },
   // {
   //   path: '/register',
   //   name: 'Registration',

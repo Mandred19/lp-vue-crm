@@ -1,7 +1,7 @@
 <template>
   <v-card
   elevation="2"
-  class="card auth-card"
+  class="card register-card"
   max-width="400"
   min-width="320"
   outlined>
@@ -10,6 +10,7 @@
     <v-card-text>
       <form @submit.prevent="formHandler">
         <v-text-field
+        v-model="email"
         type="email"
         label="Email"
         title="Email"
@@ -27,6 +28,7 @@
         @click:append="isShow = !isShow"/>
 
         <v-text-field
+        v-model="name"
         type="text"
         label="Name"
         title="Name"
@@ -68,6 +70,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
 
 @Component({
   name: 'RegistrationForm',
@@ -75,16 +78,38 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class RegistrationForm extends Vue {
+  private email = '';
+
   private password = '';
+
+  private name = '';
+
+  private pending = false;
 
   private isShow = false;
 
-  formHandler(): void {
-    console.warn(111);
+  @Action register: any;
+
+  async formHandler() {
+    try {
+      this.pending = true;
+      await this.register({
+        email: this.email.trim(),
+        password: this.password.trim(),
+        name: this.name.trim(),
+      });
+      await this.$router.push('/');
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      this.pending = false;
+    }
   }
 }
 </script>
 
 <style lang="scss">
-
+  .register-card {
+    margin: auto;
+  }
 </style>

@@ -10,6 +10,7 @@
     <v-card-text>
       <form @submit.prevent="formHandler">
         <v-text-field
+        v-model="email"
         type="email"
         label="Email"
         title="Email"
@@ -62,6 +63,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
 
 @Component({
   name: 'AuthorizationForm',
@@ -69,12 +71,29 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class AuthorizationForm extends Vue {
+  private email = '';
+
   private password = '';
 
   private isShow = false;
 
-  formHandler(): void {
-    console.warn(111);
+  private pending = false;
+
+  @Action login: any;
+
+  async formHandler() {
+    try {
+      this.pending = true;
+      await this.login({
+        email: this.email.trim(),
+        password: this.password.trim(),
+      });
+      await this.$router.push('/');
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      this.pending = false;
+    }
   }
 }
 </script>

@@ -33,6 +33,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+
+interface InterfaceDropdownItem {
+  title: string;
+  action: string;
+}
 
 @Component({
   name: 'HeaderDropdown',
@@ -45,18 +51,20 @@ export default class HeaderDropdown extends Vue {
     { title: 'Exit', action: 'logout' },
   ];
 
+  @Action logout: any;
+
   dropdownHandler(action: string) {
     switch (action) {
     case '/profile': this.$router.push(action).catch((e) => console.warn(e)); break;
-    case 'logout': this.$router.push('/login').catch((e) => console.warn(e)); break;
+    case 'logout': this.logoutHandler(); break;
     default: break;
     }
   }
-}
 
-interface InterfaceDropdownItem {
-  title: string;
-  action: string;
+  private async logoutHandler() {
+    await this.logout();
+    await this.$router.push('/login').catch((e) => console.warn(e));
+  }
 }
 </script>
 

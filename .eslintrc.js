@@ -20,11 +20,7 @@ module.exports = {
     'no-empty': 0,
     'no-underscore-dangle': 0,
     'max-len': ['error', { code: 180 }],
-    'no-multiple-empty-lines': [2, {
-      max: 1,
-      maxBOF: 3,
-      maxEOF: 1,
-    }],
+    'no-multiple-empty-lines': [2, { max: 1, maxBOF: 3, maxEOF: 1 }],
     'vue/html-indent': [2, 2, {
       attribute: 0,
       baseIndent: 1,
@@ -37,23 +33,13 @@ module.exports = {
       endTag: 'never',
       selfClosingTag: 'never',
     }],
-    'vue/html-closing-bracket-newline': [2, {
-      singleline: 'never',
-      multiline: 'never',
-    }],
-    'vue/max-attributes-per-line': [2, {
-      singleline: 3,
-    }],
+    'vue/html-closing-bracket-newline': [2, { singleline: 'never', multiline: 'never' }],
+    'vue/max-attributes-per-line': [2, { singleline: 3 }],
   },
   overrides: [
     {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-      ],
-      env: {
-        jest: true,
-      },
+      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+      env: { jest: true },
     },
   ],
 };

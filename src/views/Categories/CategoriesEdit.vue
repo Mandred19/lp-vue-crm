@@ -6,17 +6,21 @@
       <form @submit.prevent="formHandler" class="mb-4">
         <v-select
         @change="selectHandler($event)"
-        :items="categories"
+        :items="categoriesList"
+        :value="currentCategory"
         label="Categories"
         title="Categories"
         outlined/>
 
         <v-text-field
+        v-model="categoryName"
         label="Category name"
         title="Category name"
+        type="text"
         outlined/>
 
         <v-text-field
+        v-model="categoryLimit"
         label="Category limit"
         title="Category limit"
         type="number"
@@ -42,6 +46,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { Action, Getter } from 'vuex-class';
+import { InterfaceCategory } from '@/store/modules/category/types';
 
 @Component({
   name: 'CategoriesEdit',
@@ -49,16 +55,43 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class CategoriesEdit extends Vue {
-  private categories = ['Foo', 'Bar', 'Fizz', 'Buzz'];
+  currentCategory: currentCategoryType = { text: '', value: '' };
 
-  formHandler(): void {
-    console.warn(111);
+  categoryName = '';
+
+  categoryLimit = 0;
+
+  @Getter('getCategories') categories: any;
+
+  @Action('updateCategory') updateCategory: any;
+
+  get categoriesList(): currentCategoryType[] {
+    return this.categories.map((item: InterfaceCategory) => ({
+      text: item.name,
+      value: item.id,
+    }));
+  }
+
+  async formHandler() {
+    try {
+      await this.updateCategory({
+        id: this.currentCategory.value,
+        name: this.categoryName,
+        limit: this.categoryLimit,
+      });
+      await this.$emit('updateCategoriesList');
+    } catch (e) {}
   }
 
   selectHandler(val: string): void {
-    console.warn(val);
+    const { name, limit } = this.categories.find((item: InterfaceCategory) => item.id === val);
+    this.currentCategory = this.categoriesList.find((item: currentCategoryType) => item.value === val) || this.currentCategory;
+    this.categoryName = name;
+    this.categoryLimit = limit;
   }
 }
+
+type currentCategoryType = { text: string; value: string };
 </script>
 
 <style lang="scss">

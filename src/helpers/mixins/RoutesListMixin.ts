@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import InterfaceRoute from '@/interfaces/InterfaceRoute';
+import InterfaceRoute from '@/models/InterfaceRoute';
 
 @Component({})
 export default class RoutesListMixin extends Vue {

@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator';
 import RoutesListMixin from '@/helpers/mixins/RoutesListMixin';
-import InterfaceRoute from '@/interfaces/InterfaceRoute';
+import InterfaceRoute from '@/models/InterfaceRoute';
 
 @Component({
   name: 'ScreenTitle',

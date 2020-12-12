@@ -22,6 +22,10 @@ export default class App extends Vue {
   get currentLayout() {
     return this.$route.meta.layout ? `${this.$route.meta.layout}-layout` : 'empty-layout';
   }
+
+  created() {
+    this.$store.dispatch('initApp');
+  }
 }
 </script>
 

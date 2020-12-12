@@ -5,11 +5,14 @@
 
       <form @submit.prevent="formHandler" class="mb-4">
         <v-text-field
+        v-model="categoryName"
         label="Category name"
         title="Category name"
+        type="text"
         outlined/>
 
         <v-text-field
+        v-model="categoryLimit"
         label="Category limit"
         title="Category limit"
         type="number"
@@ -35,6 +38,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
 
 @Component({
   name: 'CategoriesCreate',
@@ -42,8 +46,26 @@ import { Component } from 'vue-property-decorator';
 })
 
 export default class CategoriesCreate extends Vue {
-  formHandler(): void {
-    console.warn(111);
+  categoryName = '';
+
+  categoryLimit = 0;
+
+  @Action('createCategory') createCategory: any;
+
+  async formHandler() {
+    try {
+      await this.createCategory({
+        name: this.categoryName,
+        limit: this.categoryLimit,
+      });
+      this.resetForm();
+    } catch (e) {}
+  }
+
+  private resetForm(): void {
+    this.categoryName = '';
+    this.categoryLimit = 0;
+    this.$emit('updateCategoriesList');
   }
 }
 </script>

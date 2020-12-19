@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { InterfaceRootState } from '@/store/types';
 import { auth } from '@/store/modules/auth/index';
 import { category } from '@/store/modules/category/index';
+import { records } from '@/store/modules/records/index';
 
 Vue.use(Vuex);
 
@@ -13,7 +14,7 @@ const store: StoreOptions<InterfaceRootState> = {
     error: null,
   },
   modules: {
-    auth, category,
+    auth, category, records,
   },
   getters: {
     getUserId(state) {
@@ -27,7 +28,7 @@ const store: StoreOptions<InterfaceRootState> = {
     _SET_USER_ID(state, id) {
       state.userId = id;
     },
-    _SET_ERROR(state, payload) {
+    SET_ERROR(state, payload) {
       state.error = payload;
     },
   },
@@ -40,7 +41,7 @@ const store: StoreOptions<InterfaceRootState> = {
       try {
         await dispatch('loadUserId');
       } catch (e) {
-        commit('_SET_ERROR', e);
+        commit('SET_ERROR', e);
         throw e;
       }
     },

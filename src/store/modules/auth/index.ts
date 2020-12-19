@@ -14,7 +14,7 @@ const actions: ActionTree<InterfaceAuthState, InterfaceRootState> = {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },
@@ -28,7 +28,7 @@ const actions: ActionTree<InterfaceAuthState, InterfaceRootState> = {
         name,
       });
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },

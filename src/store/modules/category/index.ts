@@ -38,7 +38,7 @@ const actions: ActionTree<InterfaceCategoryState, InterfaceRootState> = {
       const userId = getters.getUserId;
       await firebase.database().ref(`users/${userId}/categories`).push({ name, limit });
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },
@@ -47,7 +47,7 @@ const actions: ActionTree<InterfaceCategoryState, InterfaceRootState> = {
       const userId = getters.getUserId;
       await firebase.database().ref(`users/${userId}/categories`).child(id).update({ name, limit });
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },
@@ -57,7 +57,7 @@ const actions: ActionTree<InterfaceCategoryState, InterfaceRootState> = {
       const categories = (await firebase.database().ref(`users/${userId}/categories`).once('value')).val() || {};
       commit('SET_CATEGORIES', Object.keys(categories).map((key) => ({ ...categories[key], id: key })));
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },
@@ -67,7 +67,7 @@ const actions: ActionTree<InterfaceCategoryState, InterfaceRootState> = {
       const category = (await firebase.database().ref(`users/${userId}/categories`).child(id).once('value')).val() || {};
       commit('SET_CATEGORY', { ...category, id });
     } catch (e) {
-      commit('_SET_ERROR', e);
+      commit('SET_ERROR', e);
       throw e;
     }
   },

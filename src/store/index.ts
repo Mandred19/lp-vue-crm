@@ -5,6 +5,7 @@ import { InterfaceRootState } from '@/store/types';
 import { auth } from '@/store/modules/auth/index';
 import { category } from '@/store/modules/category/index';
 import { records } from '@/store/modules/records/index';
+import { info } from '@/store/modules/info/index';
 
 Vue.use(Vuex);
 
@@ -14,7 +15,7 @@ const store: StoreOptions<InterfaceRootState> = {
     error: null,
   },
   modules: {
-    auth, category, records,
+    auth, category, records, info,
   },
   getters: {
     getUserId(state) {
@@ -40,6 +41,7 @@ const store: StoreOptions<InterfaceRootState> = {
     async initApp({ commit, dispatch }) {
       try {
         await dispatch('loadUserId');
+        await dispatch('loadInfo');
       } catch (e) {
         commit('SET_ERROR', e);
         throw e;

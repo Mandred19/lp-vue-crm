@@ -5,8 +5,10 @@
         <v-btn
         color="secondary"
         v-bind="attrs"
+        :disabled="!info"
+        :loading="!info"
         v-on="on">
-          User name
+          {{ userName }}
 
           <v-icon
           right>
@@ -33,7 +35,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { Action } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 
 interface InterfaceDropdownItem {
   title: string;
@@ -51,11 +53,17 @@ export default class HeaderDropdown extends Vue {
     { title: 'Exit', action: 'logout' },
   ];
 
+  @Getter('getInfo') info: any;
+
+  get userName(): string {
+    return this.info?.name;
+  }
+
   @Action logout: any;
 
   dropdownHandler(action: string) {
     switch (action) {
-    case '/profile': this.$router.push(action).catch((e) => console.warn(e)); break;
+    case '/profile': this.$router.push(action).catch(() => ({})); break;
     case 'logout': this.logoutHandler(); break;
     default: break;
     }
@@ -63,7 +71,7 @@ export default class HeaderDropdown extends Vue {
 
   private async logoutHandler() {
     await this.logout();
-    await this.$router.push('/login').catch((e) => console.warn(e));
+    await this.$router.push('/login').catch(() => ({}));
   }
 }
 </script>

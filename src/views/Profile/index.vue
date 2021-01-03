@@ -6,17 +6,15 @@
 
     <v-row v-else no-gutters>
       <v-col md="6" sm="12">
-        <form @submit.prevent="formHandler('locale')" class="mb-4">
+        <form @submit.prevent="formHandler" class="mb-4">
           <v-select
           @change="selectHandler($event, 'locale')"
           :items="locales"
-          :value="userInfo.locale"
+          :value="locale"
           label="Language"
           title="Language"
           outlined/>
-        </form>
 
-        <form @submit.prevent="formHandler('theme')" class="mb-4">
           <v-select
           @change="selectHandler($event, 'theme')"
           :items="themes"
@@ -24,17 +22,15 @@
           label="Theme"
           title="Theme"
           outlined/>
-        </form>
 
-        <form @submit.prevent="formHandler('info')" class="mb-4">
           <v-text-field
-          :value="userInfo.name"
+          v-model="name"
           label="Your name"
           title="Your name"
           outlined/>
 
           <v-text-field
-          :value="userInfo.bill"
+          v-model="bill"
           label="Your bill"
           title="Your bill"
           type="number"
@@ -60,7 +56,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import ScreenTitle from '@/components/ScreenTitle.vue';
 import { Action, Getter } from 'vuex-class';
 import { InterfaceInfo } from '@/store/modules/info/types';
@@ -93,56 +89,33 @@ export default class Profile extends Vue {
 
   @Getter('getInfo') info: any;
 
-  get userInfo(): InterfaceInfo {
-    return {
-      bill: this.info?.bill,
-      locale: this.info?.locale,
-      name: this.info?.name,
-    };
-  }
-
   @Action('updateInfo') updateInfo: any;
 
-  formHandler(prop: string): void {
-    switch (prop) {
-    case 'locale': this.updateLocale(); break;
-    case 'theme': this.updateTheme(); break;
-    case 'info': this.updateAllUserInfo(); break;
-    default: break;
+  async formHandler() {
+    try {
+      this.pending = true;
+      await this.updateInfo({ bill: this.bill, locale: this.locale, name: this.name/* , theme: this.theme */ });
+      this.pending = false;
+    } catch (e) {
+      this.pending = false;
     }
   }
 
   selectHandler(val: string, prop: string): void {
-    console.warn(val, prop);
-  }
-
-  private async updateAllUserInfo() {
-    try {
-      this.pending = true;
-      console.warn(1);
-      this.pending = false;
-    } catch (e) {
-      this.pending = false;
+    switch (prop) {
+    case 'locale': this.locale = val; break;
+    case 'theme': this.theme = val; break;
+    default: break;
     }
   }
 
-  private async updateLocale() {
-    try {
-      this.pending = true;
-      console.warn(1);
-      this.pending = false;
-    } catch (e) {
-      this.pending = false;
-    }
-  }
-
-  private async updateTheme() {
-    try {
-      this.pending = true;
-      console.warn(1);
-      this.pending = false;
-    } catch (e) {
-      this.pending = false;
+  @Watch('info', { immediate: true })
+  changeInfoHandler(val: InterfaceInfo) {
+    if (val) {
+      const { bill, locale, name } = val;
+      this.bill = bill;
+      this.locale = locale;
+      this.name = name;
     }
   }
 }

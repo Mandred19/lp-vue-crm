@@ -27,6 +27,7 @@
           v-model="name"
           label="Your name"
           title="Your name"
+          :error-messages="validateNameMessage"
           outlined/>
 
           <v-text-field
@@ -34,6 +35,7 @@
           label="Your bill"
           title="Your bill"
           type="number"
+          :error-messages="validateLimitMessage"
           outlined/>
 
           <v-btn
@@ -56,14 +58,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Watch } from 'vue-property-decorator';
-import ScreenTitle from '@/components/ScreenTitle.vue';
 import { Action, Getter } from 'vuex-class';
+import { Component, Watch } from 'vue-property-decorator';
+import { validationMixin } from 'vuelidate';
+import { minValue, required, minLength } from 'vuelidate/lib/validators';
+import ScreenTitle from '@/components/ScreenTitle.vue';
 import { InterfaceInfo } from '@/store/modules/info/types';
 
 @Component({
   name: 'Profile',
   components: { ScreenTitle },
+  validations: {
+    name: { required, minLength: minLength(3) },
+    bill: { required, minValue: minValue(0) },
+  },
+  mixins: [validationMixin],
 })
 
 export default class Profile extends Vue {
@@ -92,11 +101,17 @@ export default class Profile extends Vue {
   @Action('updateInfo') updateInfo: any;
 
   async formHandler() {
+    if (this.$v.$invalid) {
+      this.$v.$touch();
+      return;
+    }
+
     try {
       this.pending = true;
       await this.updateInfo({ bill: this.bill, locale: this.locale, name: this.name/* , theme: this.theme */ });
-      this.pending = false;
     } catch (e) {
+      console.warn(e);
+    } finally {
       this.pending = false;
     }
   }
@@ -107,6 +122,26 @@ export default class Profile extends Vue {
     case 'theme': this.theme = val; break;
     default: break;
     }
+  }
+
+  get validateNameMessage(): string {
+    let str = '';
+    if (this.$v.name.$dirty && !this.$v.name.required) {
+      str = 'Enter user name';
+    } else if (this.$v.name.$dirty && !this.$v.name.minLength) {
+      str = `Minimum user name length at least ${this.$v.name.$params.minLength.min} symbols`;
+    }
+    return str;
+  }
+
+  get validateLimitMessage(): string {
+    let str = '';
+    if (this.$v.bill.$dirty && !this.$v.bill.required) {
+      str = 'Enter user bill';
+    } else if (this.$v.bill.$dirty && !this.$v.bill.minValue) {
+      str = `Minimum value is ${this.$v.bill.$params.minValue.min}`;
+    }
+    return str;
   }
 
   @Watch('info', { immediate: true })

@@ -6,6 +6,7 @@
     :value="currentCategory"
     label="Categories"
     title="Categories"
+    :error-messages="validateCurrentCategoryMessage"
     outlined/>
 
     <v-radio-group v-model="recordType" class="radio-group">
@@ -22,6 +23,7 @@
     label="Amount"
     title="Amount"
     type="number"
+    :error-messages="validateAmountMessage"
     outlined/>
 
     <v-text-field
@@ -29,6 +31,7 @@
     label="Description"
     title="Description"
     type="text"
+    :error-messages="validateDescriptionMessage"
     outlined/>
 
     <v-btn
@@ -49,12 +52,20 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { InterfaceCategory } from '@/store/modules/category/types';
 import { Action, Getter } from 'vuex-class';
+import { validationMixin } from 'vuelidate';
+import { minValue, required } from 'vuelidate/lib/validators';
+import { InterfaceCategory } from '@/store/modules/category/types';
 
 @Component({
   name: 'RecordCreate',
   components: {},
+  validations: {
+    amount: { required, minValue: minValue(1) },
+    description: { required },
+    currentCategory: { value: { required } },
+  },
+  mixins: [validationMixin],
 })
 
 export default class RecordCreate extends Vue {
@@ -73,11 +84,52 @@ export default class RecordCreate extends Vue {
 
   @Getter('getCategories') categories: any;
 
-  // @Getter('getUserInfo') userInfo: any;
+  @Getter('getInfo') info: any;
 
   @Action('createRecord') createRecord: any;
 
-  // @Action('updateInfo') updateInfo: any;
+  @Action('updateInfo') updateInfo: any;
+
+  async formHandler() {
+    if (this.$v.$invalid) {
+      this.$v.$touch();
+      return;
+    }
+
+    try {
+      if (this.canCreateRecord) {
+        await this.createRecord({
+          categoryId: this.currentCategory.value,
+          type: this.recordType,
+          amount: this.amount,
+          description: this.description,
+          date: new Date().toJSON(),
+        });
+
+        const bill = this.recordType === 1
+          ? this.info.bill + this.amount
+          : this.info.bill - this.amount;
+
+        await this.updateInfo({ bill });
+
+        await this.resetForm();
+        await this.$emit('updateCategoriesList');
+      } else {
+        console.warn('NOT CREATE RECORD');
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  selectHandler(val: string): void {
+    this.currentCategory = this.categoriesList.find((item: currentCategoryType) => item.value === val) || this.currentCategory;
+  }
+
+  private resetForm() {
+    this.description = '';
+    this.amount = 1;
+  }
 
   get categoriesList(): currentCategoryType[] {
     return this.categories.map((item: InterfaceCategory) => ({
@@ -90,42 +142,29 @@ export default class RecordCreate extends Vue {
     if (this.recordType === 1) {
       return true;
     }
-    return true;
-    // return this.getUInfo.bill >= this.amount;
+    return this.info.bill >= this.amount;
   }
 
-  async formHandler() {
-    try {
-      if (this.canCreateRecord) {
-        await this.createRecord({
-          categoryId: this.currentCategory.value,
-          type: this.recordType,
-          amount: this.amount,
-          description: this.description,
-          date: new Date().toJSON(),
-        });
-
-        // const bill = this.recordType === 1
-        //   ? this.userInfo.bill + this.amount
-        //   : this.userInfo.bill - this.amount;
-        //
-        // await this.updateInfo({ bill });
-
-        await this.resetForm();
-        await this.$emit('updateCategoriesList');
-      } else {
-        console.warn('NOT CREATE RECORD');
-      }
-    } catch (e) {}
+  get validateCurrentCategoryMessage(): string {
+    return this.$v.currentCategory.value?.$dirty && !this.$v.currentCategory.value.required ? 'Set current category' : '';
   }
 
-  selectHandler(val: string): void {
-    this.currentCategory = this.categoriesList.find((item: currentCategoryType) => item.value === val) || this.currentCategory;
+  get validateAmountMessage(): string {
+    let str = '';
+    if (this.$v.amount.$dirty && !this.$v.amount.required) {
+      str = 'Enter record amount';
+    } else if (this.$v.amount.$dirty && !this.$v.amount.minValue) {
+      str = `Enter a minimum amount ${this.$v.amount.$params.minValue.min}`;
+    }
+    return str;
   }
 
-  private resetForm() {
-    this.description = '';
-    this.amount = 1;
+  get validateDescriptionMessage(): string {
+    let str = '';
+    if (this.$v.description.$dirty && !this.$v.description.required) {
+      str = 'Enter description';
+    }
+    return str;
   }
 }
 

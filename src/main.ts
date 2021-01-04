@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuelidate from 'vuelidate';
 import firebase from 'firebase/app';
 import router from './router';
 import store from './store';
@@ -9,6 +10,8 @@ import 'firebase/database';
 
 import App from './App.vue';
 import Preloader from './components/Preloader.vue';
+
+Vue.use(Vuelidate);
 
 Vue.component('Preloader', Preloader);
 

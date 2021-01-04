@@ -9,6 +9,7 @@
         label="Category name"
         title="Category name"
         type="text"
+        :error-messages="validateCategoryNameMessage"
         outlined/>
 
         <v-text-field
@@ -16,6 +17,7 @@
         label="Category limit"
         title="Category limit"
         type="number"
+        :error-messages="validateCategoryLimitMessage"
         outlined/>
 
         <v-btn
@@ -39,10 +41,17 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
+import { validationMixin } from 'vuelidate';
+import { minLength, minValue, required } from 'vuelidate/lib/validators';
 
 @Component({
   name: 'CategoriesCreate',
   components: {},
+  validations: {
+    categoryName: { required, minLength: minLength(3) },
+    categoryLimit: { required, minValue: minValue(0) },
+  },
+  mixins: [validationMixin],
 })
 
 export default class CategoriesCreate extends Vue {
@@ -53,19 +62,46 @@ export default class CategoriesCreate extends Vue {
   @Action('createCategory') createCategory: any;
 
   async formHandler() {
+    if (this.$v.$invalid) {
+      this.$v.$touch();
+      return;
+    }
+
     try {
       await this.createCategory({
         name: this.categoryName,
         limit: this.categoryLimit,
       });
       this.resetForm();
-    } catch (e) {}
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
   private resetForm(): void {
     this.categoryName = '';
     this.categoryLimit = 0;
     this.$emit('updateCategoriesList');
+  }
+
+  get validateCategoryNameMessage(): string {
+    let str = '';
+    if (this.$v.categoryName.$dirty && !this.$v.categoryName.required) {
+      str = 'Enter category name';
+    } else if (this.$v.categoryName.$dirty && !this.$v.categoryName.minLength) {
+      str = `Minimum category name length at least ${this.$v.categoryName.$params.minLength.min} symbols`;
+    }
+    return str;
+  }
+
+  get validateCategoryLimitMessage(): string {
+    let str = '';
+    if (this.$v.categoryLimit.$dirty && !this.$v.categoryLimit.required) {
+      str = 'Enter category limit';
+    } else if (this.$v.categoryLimit.$dirty && !this.$v.categoryLimit.minValue) {
+      str = `Minimum value is ${this.$v.categoryLimit.$params.minValue.min}`;
+    }
+    return str;
   }
 }
 </script>

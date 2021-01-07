@@ -79,7 +79,7 @@ export default class RecordCreate extends Vue {
 
   readonly recordTypes = [
     { title: 'Income', value: 1 },
-    { title: 'Expense', value: 2 },
+    { title: 'Expense', value: 0 },
   ];
 
   @Getter('getCategories') categories: any;
@@ -99,16 +99,14 @@ export default class RecordCreate extends Vue {
     try {
       if (this.canCreateRecord) {
         await this.createRecord({
-          categoryId: this.currentCategory.value,
-          type: this.recordType,
           amount: this.amount,
-          description: this.description,
+          categoryId: this.currentCategory.value,
           date: new Date().toJSON(),
+          description: this.description,
+          type: this.recordType,
         });
 
-        const bill = this.recordType === 1
-          ? this.info.bill + this.amount
-          : this.info.bill - this.amount;
+        const bill = this.recordType ? this.info.bill + this.amount : this.info.bill - this.amount;
 
         await this.updateInfo({ bill });
 
@@ -139,10 +137,7 @@ export default class RecordCreate extends Vue {
   }
 
   get canCreateRecord(): boolean {
-    if (this.recordType === 1) {
-      return true;
-    }
-    return this.info.bill >= this.amount;
+    return this.recordType ? true : this.info.bill >= this.amount;
   }
 
   get validateCurrentCategoryMessage(): string {

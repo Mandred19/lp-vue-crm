@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="currentRouteTitle" class="flex flex-grow-1 align-center justify-start">
+  <v-row v-if="currentRouteTitle" class="no-gutters flex flex-grow-1 align-center justify-start">
     <v-col cols="12">
       <h1 class="screen-title">{{ currentRouteTitle.title }}</h1>
     </v-col>

@@ -4,7 +4,10 @@ export interface InterfaceRecordsState {
 }
 
 export interface InterfaceRecord {
+  amount: number;
+  categoryId: string;
+  date: Date;
+  description: string;
   id: string;
-  limit: number;
-  name: string;
+  type: number;
 }

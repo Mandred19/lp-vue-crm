@@ -86,12 +86,12 @@ export default class Profile extends Vue {
 
   theme = '';
 
-  locales = [
+  readonly locales = [
     { value: 'en-US', text: 'English' },
     { value: 'ru-RU', text: 'Русский' },
   ];
 
-  themes = [
+  readonly themes = [
     { value: 'light', text: 'Light' },
     { value: 'dark', text: 'Dark' },
   ];

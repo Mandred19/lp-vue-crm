@@ -77,7 +77,7 @@ export default class RecordCreate extends Vue {
 
   description = '';
 
-  recordTypes = [
+  readonly recordTypes = [
     { title: 'Income', value: 1 },
     { title: 'Expense', value: 2 },
   ];

@@ -26,7 +26,7 @@ const store: StoreOptions<InterfaceRootState> = {
     },
   },
   mutations: {
-    _SET_USER_ID(state, id) {
+    SET_USER_ID(state, id) {
       state.userId = id;
     },
     SET_ERROR(state, payload) {
@@ -36,7 +36,7 @@ const store: StoreOptions<InterfaceRootState> = {
   actions: {
     async loadUserId({ commit }) {
       const user = firebase.auth().currentUser;
-      commit('_SET_USER_ID', user?.uid || null);
+      commit('SET_USER_ID', user?.uid || null);
     },
     async initApp({ commit, dispatch }) {
       try {

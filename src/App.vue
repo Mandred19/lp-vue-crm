@@ -19,12 +19,12 @@ import MainLayout from '@/layout/MainLayout.vue';
 })
 
 export default class App extends Vue {
-  get currentLayout() {
-    return this.$route.meta.layout ? `${this.$route.meta.layout}-layout` : 'empty-layout';
+  async created() {
+    await this.$store.dispatch('initApp');
   }
 
-  created() {
-    this.$store.dispatch('initApp');
+  get currentLayout() {
+    return this.$route.meta.layout ? `${this.$route.meta.layout}-layout` : 'empty-layout';
   }
 }
 </script>
